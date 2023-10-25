@@ -53,13 +53,13 @@ class SingleTable:
         
         # return synthetic_data
 
-    def gausian_trainer(self, model_name):
+    def gaussian_trainer(self, model_name):
         
         metadata = self.metadata_relation()
 
         start = time.time()
         synthesizer = GaussianCopulaSynthesizer(metadata)
-        synthesizer.fit(self.data)
+        synthesizer.fit(self.real_data)
 
         # Saving model
         file_name = model_name + '.pkl'
