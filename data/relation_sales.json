@@ -1,0 +1,8 @@
+{
+    "master": "data/sales_data/main.csv", 
+    "child_relation": [
+        ["data/sales_data/product.csv", "Product", "Product"],
+        ["data/sales_data/geo.csv", "Geo", "Geography"],
+        ["data/sales_data/sales.csv", "Sales person", "Sales Person"]
+    ]
+}

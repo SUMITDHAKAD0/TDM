@@ -1,0 +1,6 @@
+{
+    "master": "data/iris.csv", 
+    "child_relation": [
+
+    ]
+}
