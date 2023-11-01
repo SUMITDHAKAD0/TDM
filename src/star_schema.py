@@ -101,6 +101,7 @@ class TDM_Pipeline:
 
 class TDM_Pipeline_Run:
     def main(self):
+        
         config = ConfigParser()
         config.read('./config/master_config.properties')
         path_dict = dict(config.items('paths'))
@@ -113,6 +114,7 @@ class TDM_Pipeline_Run:
         stages_dict = dict(config.items('stages_flags'))
         model_dict = dict(config.items('model_flags'))
         logger.info(">>>>>> Configuration file Loaded <<<<<<")
+
         pipeline = TDM_Pipeline(data, stages_dict, model_dict, model_params, num_rows, path_dict)
         pipeline.run_pipeline()
 

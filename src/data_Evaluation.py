@@ -30,7 +30,15 @@ class Evaluation_Data:
             fig.write_image(f"./results/{col}.png")
                 
             # fig.show()
-        for i in self.real_data.columns:
+        for col in self.real_data.columns:
             # print(i)
-            show_distrubtion(i)
-        return None
+            # show_distrubtion(col)
+            fig = get_column_plot(
+                real_data = self.real_data,
+                synthetic_data = self.synthetic_data,
+                column_name=col,
+                metadata=metadata
+            )
+            fig.write_image(f"./results/{col}.png")
+             
+        # return None
