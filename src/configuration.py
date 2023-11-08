@@ -42,3 +42,11 @@ class ConfigurationManager:
         merged_dict = {**path_dict, **model_params, **stages_dict, **model_dict}
         
         return data, merged_dict  # Return data and the merged dictionary
+
+# if __name__ == '__main__':
+#     config_obj = ConfigurationManager()
+#     data, merged_dict = config_obj.configurations()
+
+#     print("Merged Dictionary:", merged_dict)
+#     print('================================================================')
+#     print("Data:", data)
