@@ -16,9 +16,15 @@ class Generator:
         file_name = model_name + '.pkl'
         path = os.path.join(self.model_path, file_name)
 
-        synthesizer = CTGANSynthesizer.load(
-            filepath = path
-        )
+        if model_name == 'ctgan':
+            synthesizer = CTGANSynthesizer.load(
+                filepath = path
+            )
+        if model_name == 'gaussian':
+            synthesizer = GaussianCopulaSynthesizer.load(
+                filepath = path
+            )
+
         synthetic_data = synthesizer.sample(num_rows=self.num_rows)
 
         file_name = model_name + '_generated_data.csv'

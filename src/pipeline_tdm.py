@@ -1,19 +1,20 @@
 import json
 from src.logging import logger
 from src.single_Table import SingleTable
-from src.data_Evaluation import Evaluation_Data
+from src.data_Evaluation import Evaluation
 from src.data_generator import Generator
 from src.preprocess import Preprocess
 from configparser import ConfigParser
 from src.utils import create_directories
 from src.configuration import ConfigurationManager
+import pandas as pd
 
 class TDM_Pipeline:
     def __init__(self, data, config_dict):
         self.data = data
         self.config_dict = config_dict
-        # self.merged_data = None
-        # self.synthetic_data = None
+        # self.merged_data = pd.read_csv('results/merged_data.csv')
+        # self.synthetic_data = pd.read_csv('results/ctgan_generated_data.csv')
 
     def run_pipeline(self):
         if self.config_dict['preprocess'].lower() == 'true':
@@ -33,6 +34,7 @@ class TDM_Pipeline:
             logger.info(">>>>>> Stage Preprocessing started <<<<<<")
             obj_preprocess = Preprocess(self.data)
             self.merged_data = obj_preprocess.merge_dataframes()
+            # self.merged_data.to_csv('results/merged_data.csv', index=False)
             logger.info(">>>>>> Stage Preprocessing completed <<<<<<")
         except Exception as e:
             logger.exception(e)
@@ -77,11 +79,11 @@ class TDM_Pipeline:
 
             obj = Generator(num_rows, model_path, data_path)
 
-            if model_type == "ctgan":
-                self.synthetic_data = obj.data_generator(model_type)
+            # if model_type == "ctgan":
+            self.synthetic_data = obj.data_generator(model_type)
 
-            if model_type == "gaussian":
-                self.synthetic_data = obj.data_generator(model_type)
+            # if model_type == "gaussian":
+            #     self.synthetic_data = obj.data_generator(model_type)
 
             logger.info(f">>>>>> Stage Data Generation ({model_type}) completed <<<<<<")
         except Exception as e:
@@ -91,18 +93,19 @@ class TDM_Pipeline:
     def run_data_evaluation(self):
         try:
             logger.info(">>>>>> Stage Evaluation Started <<<<<<")
-            ev_obj = Evaluation_Data(self.merged_data, self.synthetic_data)
-            ev_obj.evaluation()
+            ev_obj = Evaluation(self.merged_data, self.synthetic_data)
+            ev_obj.data_evaluation()
             logger.info(">>>>>> Stage Evaluation Completed <<<<<<")
         except Exception as e:
             logger.exception(e)
             raise e
 
+
 class TDM_Pipeline_Run:
     def main(self):
+
         config_obj = ConfigurationManager()
         data, config_dict = config_obj.configurations()
-
         logger.info(">>>>>> Configuration file Loaded <<<<<<")
 
         pipeline = TDM_Pipeline(data, config_dict)

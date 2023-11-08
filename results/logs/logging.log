@@ -1,0 +1,70 @@
+[2023-11-07 16:18:54,572: INFO: run: x=====x>>>>>> Welcome to Synthetic Data Generator <<<<<<x=====x
+]
+[2023-11-07 16:18:54,578: INFO: pipeline_tdm: >>>>>> Configuration file Loaded <<<<<<]
+[2023-11-07 16:18:54,579: INFO: pipeline_tdm: >>>>>> Stage Preprocessing started <<<<<<]
+[2023-11-07 16:18:54,585: INFO: pipeline_tdm: >>>>>> Stage Preprocessing completed <<<<<<]
+[2023-11-07 16:18:54,590: INFO: pipeline_tdm: >>>>>> Stage Modeling (ctgan) started <<<<<<]
+[2023-11-07 16:18:54,594: INFO: single_table: Detected metadata:]
+[2023-11-07 16:18:54,594: INFO: single_table: {
+    "METADATA_SPEC_VERSION": "SINGLE_TABLE_V1",
+    "columns": {
+        "sepal_length": {
+            "sdtype": "numerical"
+        },
+        "sepal_width": {
+            "sdtype": "numerical"
+        },
+        "petal_length": {
+            "sdtype": "numerical"
+        },
+        "petal_width": {
+            "sdtype": "numerical"
+        },
+        "species": {
+            "sdtype": "categorical"
+        },
+        "id": {
+            "sdtype": "numerical"
+        }
+    }
+}]
+[2023-11-07 16:18:54,613: INFO: data_processor: Fitting table None metadata]
+[2023-11-07 16:18:54,620: INFO: data_processor: Fitting formatters for table None]
+[2023-11-07 16:18:54,628: INFO: data_processor: Fitting constraints for table None]
+[2023-11-07 16:18:54,629: INFO: data_processor: Setting the configuration for the ``HyperTransformer`` for table None]
+[2023-11-07 16:18:54,662: INFO: data_processor: Fitting HyperTransformer for table None]
+[2023-11-07 16:18:54,740: INFO: null: Guidance: There are no missing values in column sepal_length. Extra column not created.]
+[2023-11-07 16:18:55,142: INFO: null: Guidance: There are no missing values in column sepal_width. Extra column not created.]
+[2023-11-07 16:18:55,395: INFO: null: Guidance: There are no missing values in column petal_length. Extra column not created.]
+[2023-11-07 16:18:55,564: INFO: null: Guidance: There are no missing values in column petal_width. Extra column not created.]
+[2023-11-07 16:18:55,707: INFO: null: Guidance: There are no missing values in column id. Extra column not created.]
+[2023-11-07 16:18:59,885: INFO: pipeline_tdm: >>>>>> Stage Modeling (ctgan) completed <<<<<<]
+[2023-11-07 16:18:59,892: INFO: pipeline_tdm: >>>>>> Stage Data Generation (ctgan) started <<<<<<]
+[2023-11-07 16:19:00,154: INFO: pipeline_tdm: >>>>>> Stage Data Generation (ctgan) completed <<<<<<]
+[2023-11-07 16:19:00,155: INFO: pipeline_tdm: >>>>>> Stage Evaluation Started <<<<<<]
+[2023-11-07 16:19:06,442: INFO: single_table: Detected metadata:]
+[2023-11-07 16:19:06,442: INFO: single_table: {
+    "METADATA_SPEC_VERSION": "SINGLE_TABLE_V1",
+    "columns": {
+        "sepal_length": {
+            "sdtype": "numerical"
+        },
+        "sepal_width": {
+            "sdtype": "numerical"
+        },
+        "petal_length": {
+            "sdtype": "numerical"
+        },
+        "petal_width": {
+            "sdtype": "numerical"
+        },
+        "id": {
+            "sdtype": "numerical"
+        }
+    }
+}]
+[2023-11-07 16:19:10,092: INFO: data_Evaluation: JSON file is dumped successfully]
+[2023-11-07 16:19:10,094: INFO: pipeline_tdm: >>>>>> Stage Evaluation Completed <<<<<<]
+[2023-11-07 16:19:10,100: INFO: run: x=====x>>>>>> All Stages Execute Successfully <<<<<<x=====x
+
+]

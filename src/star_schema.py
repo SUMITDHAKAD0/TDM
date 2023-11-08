@@ -36,6 +36,7 @@ class TDM_Pipeline:
             logger.info(">>>>>> Stage Preprocessing started <<<<<<")
             obj_preprocess = Preprocess(self.data)
             self.merged_data = obj_preprocess.merge_dataframes()
+            self.merged_data.to_csv('results/merged_data.csv', index=False)
             logger.info(">>>>>> Stage Preprocessing completed <<<<<<")
         except Exception as e:
             logger.exception(e)
@@ -104,15 +105,19 @@ class TDM_Pipeline_Run:
         
         config = ConfigParser()
         config.read('./config/master_config.properties')
+
         path_dict = dict(config.items('paths'))
         create_directories(path_dict)
+        
         data_json = path_dict['data_json']
         with open(data_json, 'r') as file:
             data = json.load(file)
+
         num_rows = int(config.get('generation', 'num_rows'))
         model_params = dict(config.items('model_params'))
         stages_dict = dict(config.items('stages_flags'))
         model_dict = dict(config.items('model_flags'))
+
         logger.info(">>>>>> Configuration file Loaded <<<<<<")
 
         pipeline = TDM_Pipeline(data, stages_dict, model_dict, model_params, num_rows, path_dict)

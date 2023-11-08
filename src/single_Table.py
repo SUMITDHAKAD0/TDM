@@ -8,7 +8,7 @@ from configparser import ConfigParser
 
 
 class SingleTable:
-    def __init__(self, data, epochs, batch_size, model_path) -> None:
+    def __init__(self, data,  epochs, batch_size, model_path) -> None:
         self.real_data = data
         self.epochs = epochs
         self.batch_size = batch_size
