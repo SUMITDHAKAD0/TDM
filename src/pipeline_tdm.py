@@ -79,11 +79,11 @@ class TDM_Pipeline:
 
             obj = Generator(num_rows, model_path, data_path)
 
-            # if model_type == "ctgan":
-            self.synthetic_data = obj.data_generator(model_type)
+            if model_type == "ctgan":
+                self.synthetic_data = obj.data_generator(model_type)
 
-            # if model_type == "gaussian":
-            #     self.synthetic_data = obj.data_generator(model_type)
+            if model_type == "gaussian":
+                self.synthetic_data = obj.data_generator(model_type)
 
             logger.info(f">>>>>> Stage Data Generation ({model_type}) completed <<<<<<")
         except Exception as e:

@@ -143,6 +143,37 @@ class Evaluation_Data:
         # plt.show()
 
 
+    def heat_map(self):
+        """
+          Plot the Heatmap of real , fake data and there differences.
+        """
+        real_corr = self.real_data.corr()
+        fake_corr = self.synthetic_data.corr()
+        difference_corr = real_corr - fake_corr
+
+        fig, (ax1, ax2, ax3) = plt.subplots(1,3, figsize=(16,5), sharex=True, sharey=True)
+        fig.suptitle("Correlation Heat Map", fontsize=15)
+
+        fig.subplots_adjust(wspace=0.1)
+
+        ax1.title.set_text('Real Data Distribution')
+        sns.heatmap(real_corr, annot=True, cmap="YlGnBu", ax=ax1, cbar=False)
+
+        ax2.title.set_text('Fake Data Distribution')
+        sns.heatmap(fake_corr, annot=True, cmap="YlGnBu", ax=ax2, cbar=False)
+
+        ax3.title.set_text('Difference b/w Real & Fake Data')
+        sns.heatmap(difference_corr, annot=True, cmap="YlGnBu", ax=ax3, cbar=True)
+
+        # ax3.yaxis.tick_right()
+        fig.subplots_adjust(wspace=0.1)
+
+        if self.fname is not None:
+            plt.savefig(self.fname + '/correlation_plot.png')
+
+            # plt.show()
+
+
     def plot_distributions(self, nr_cols=3):
         
         nr_charts = len(self.real_data.columns)
@@ -213,10 +244,12 @@ class Evaluation_Data:
         self.overall_quality_report = quality_report.get_score()
         self.properties = quality_report.get_properties()
         self.column_wise_score = quality_report.get_details(property_name='Column Shapes')
+        self.column_pair_trend = quality_report.get_details(property_name='Column Pair Trends')
 
         # Convert DataFrames to JSON
         self.properties_json = self.properties.to_dict(orient="records")
         self.column_wise_score_json = self.column_wise_score.to_dict(orient="records")
+        self.column_pair_trend_json = self.column_pair_trend.to_dict(orient="records")
 
         # saving SDV plots
         for col in self.real_data.columns:
@@ -240,7 +273,7 @@ class Evaluation_Data:
             for foldername, subfolders, filenames in os.walk(root_folder):
                 for filename in filenames:
                     file_path = os.path.join('results', 'evaluation', filename)
-                    # print(file_path)
+                    print(file_path)
                     file_paths.append(file_path)
             return file_paths
 
@@ -263,24 +296,29 @@ class Evaluation_Data:
         }
 
         data["properties"] = {
-            "one_liner": "Column lavel overall score",
+            "one_liner": "Average of column wise score and column pair trend",
             "properties": self.properties_json
         }
 
         data["column_wise_score"] = {
-            "one_liner": "Individual Column level score",
+            "one_liner": "Individual Column level score calculated using different statistic test based metrics",
             "properties": self.column_wise_score_json
         }
 
+        data["column_pair_trend"] = {
+            "one_liner": "Column pair trend is calculated based on different similarity scores",
+            "properties": self.column_pair_trend_json
+        }
+
         data["evaluator_images"] = {
-            "one_liner": "Table evaluator plots",
+            "one_liner": "Evaluation plots",
             "images_paths": [str(image) for image in images_file_paths_list]
         }
 
         # Write the data to a JSON file
         with open('results/json_data.json', 'w') as fp:
             json.dump(data, fp)
-            logger.info("JSON file is dumped successfully")
+            logger.info("JSON file is dumped")
 
     
 class Evaluation:
@@ -302,6 +340,7 @@ class Evaluation:
         # Call the methods of the Evaluation_Data instance
         obj.plot_mean_std()
         obj.cumsum_plot()
+        obj.heat_map()
         obj.plot_pca()
         obj.plot_distributions()
         obj.data_scores()
